@@ -71,25 +71,25 @@ jobs:
 
       - name: Validate required backend secrets
         run: |
-          test -n "${{ secrets.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_ARN }}" || (echo "Missing secret: AWS_ROLE_TO_ASSUME or AWS_ROLE_ARN" && exit 1)
-          test -n "${{ secrets.TF_BACKEND_BUCKET }}" || (echo "Missing secret: TF_BACKEND_BUCKET" && exit 1)
-          test -n "${{ secrets.TF_LOCK_TABLE }}" || (echo "Missing secret: TF_LOCK_TABLE" && exit 1)
+          test -n "${{ secrets.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_ARN || vars.AWS_ROLE_TO_ASSUME || vars.AWS_ROLE_ARN }}" || (echo "Missing role input: set AWS_ROLE_TO_ASSUME (or AWS_ROLE_ARN) in Secrets or Variables" && exit 1)
+          test -n "${{ secrets.TF_BACKEND_BUCKET || vars.TF_BACKEND_BUCKET }}" || (echo "Missing backend bucket: set TF_BACKEND_BUCKET in Secrets or Variables" && exit 1)
+          test -n "${{ secrets.TF_LOCK_TABLE || vars.TF_LOCK_TABLE }}" || (echo "Missing lock table: set TF_LOCK_TABLE in Secrets or Variables" && exit 1)
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_ARN || vars.AWS_ROLE_TO_ASSUME || vars.AWS_ROLE_ARN }}
           role-session-name: github-actions-deploy
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Generate backend.hcl
         run: |
           cat > backend.hcl <<EOF
-          bucket         = "${{ secrets.TF_BACKEND_BUCKET }}"
+          bucket         = "${{ secrets.TF_BACKEND_BUCKET || vars.TF_BACKEND_BUCKET }}"
           key            = "cs1/terraform.tfstate"
           region         = "${{ env.AWS_REGION }}"
           encrypt        = true
-          dynamodb_table = "${{ secrets.TF_LOCK_TABLE }}"
+          dynamodb_table = "${{ secrets.TF_LOCK_TABLE || vars.TF_LOCK_TABLE }}"
           EOF
 
       - name: Terraform init
