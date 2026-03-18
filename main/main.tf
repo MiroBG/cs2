@@ -1,5 +1,5 @@
 module "aws_vpc_main" {
-  source = "./terraform/aws-vpc-main"
+  source = "../terraform/aws-vpc-main"
 
   region             = var.region
   vpc_name           = var.vpc_name
@@ -10,7 +10,7 @@ module "aws_vpc_main" {
 }
 
 module "aws_vpc_spoke" {
-  source = "./terraform/aws-vpc-main"
+  source = "../terraform/aws-vpc-main"
 
   region                 = var.region
   vpc_name               = var.spoke_vpc_name
@@ -124,7 +124,7 @@ resource "aws_route53_record" "web2_internal" {
 }
 
 module "aws_monitoring" {
-  source = "./terraform/aws-monitoring"
+  source = "../terraform/aws-monitoring"
 
   instance_name              = var.monitoring_instance_name
   instance_ami               = var.ec2_ami
@@ -174,7 +174,7 @@ resource "aws_security_group_rule" "db_postgres_from_monitoring" {
 }
 
 module "aws_ec2_1" {
-  source = "./terraform/aws-ec2-1"
+  source = "../terraform/aws-ec2-1"
 
   ec2_name               = var.ec2_name
   ec2_ami                = var.ec2_ami
@@ -185,7 +185,7 @@ module "aws_ec2_1" {
 }
 
 module "aws_ec2_2" {
-  source = "./terraform/aws-ec2-2"
+  source = "../terraform/aws-ec2-2"
 
   ec2_name               = var.ec2_2_name
   ec2_ami                = var.ec2_ami
@@ -196,7 +196,7 @@ module "aws_ec2_2" {
 }
 
 module "aws_alb" {
-  source = "./terraform/aws-alb"
+  source = "../terraform/aws-alb"
 
   alb_name = var.alb_name
   vpc_id   = module.aws_vpc_main.vpc_id
@@ -210,7 +210,7 @@ module "aws_alb" {
 }
 
 module "aws_rds" {
-  source = "./terraform/aws-rds"
+  source = "../terraform/aws-rds"
 
   db_identifier        = var.rds_identifier
   db_subnet_group_name = var.rds_subnet_group_name
@@ -227,7 +227,7 @@ module "aws_rds" {
 }
 
 module "aws_s3" {
-  source = "./terraform/aws-s3"
+  source = "../terraform/aws-s3"
 
   bucket_name_prefix = var.s3_bucket_name_prefix
   region             = var.region

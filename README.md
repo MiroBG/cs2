@@ -15,6 +15,7 @@ AWS infrastructure using Terraform: VPC, EC2, RDS, Grafana monitoring, and S3 st
 ```bash
 git clone <repo-url>
 cd cs1
+cd main
 cp backend.hcl.example backend.hcl
 cp terraform.tfvars.example terraform.tfvars
 ```
@@ -44,7 +45,7 @@ The outputs will show the backend bucket name and lock table name.
 Update `backend.hcl` with the values from bootstrap outputs, then run:
 
 ```bash
-cd ..
+cd ../main
 terraform init -migrate-state -backend-config=backend.hcl
 ```
 
@@ -58,18 +59,19 @@ terraform apply
 ## File Structure
 
 ```
-├── main.tf                      # Root module orchestration
-├── variables.tf                 # Input variables
-├── outputs.tf                   # Output values
-├── provider.tf                  # AWS provider config (eu-central-1 hardcoded)
-├── backend.tf                   # S3 backend configuration
-├── backend.hcl.example          # Template for backend.hcl (gitignored)
-├── terraform.tfvars.example     # Template for terraform.tfvars (create your own)
-│
 ├── bootstrap/                   # Backend infrastructure (separate apply)
 │   ├── main.tf
 │   ├── variables.tf
 │   └── outputs.tf
+│
+├── main/                        # Main environment root stack
+│   ├── main.tf                  # Root module orchestration
+│   ├── variables.tf             # Input variables
+│   ├── outputs.tf               # Output values
+│   ├── provider.tf              # AWS provider config (eu-central-1 hardcoded)
+│   ├── backend.tf               # S3 backend configuration
+│   ├── backend.hcl.example      # Template for backend.hcl (gitignored)
+│   └── terraform.tfvars.example # Template for terraform.tfvars (create your own)
 │
 └── terraform/                   # Infrastructure modules
     ├── aws-vpc-main/            # Main VPC (10.0.0.0/16)
@@ -130,9 +132,9 @@ For GitHub Actions / GitLab CI:
        steps:
          - uses: actions/checkout@v3
          - uses: hashicorp/setup-terraform@v2
-         - run: terraform init -backend-config=backend.hcl -backend-config="bucket=${{ secrets.TF_BACKEND_BUCKET }}" -backend-config="lock_table=${{ secrets.TF_LOCK_TABLE }}"
-         - run: terraform plan
-         - run: terraform apply -auto-approve
+             - run: cd main && terraform init -backend-config=backend.hcl -backend-config="bucket=${{ secrets.TF_BACKEND_BUCKET }}" -backend-config="lock_table=${{ secrets.TF_LOCK_TABLE }}"
+             - run: cd main && terraform plan
+             - run: cd main && terraform apply -auto-approve
    ```
 
 3. Add `TF_BACKEND_BUCKET` and `TF_LOCK_TABLE` as repository secrets (from bootstrap outputs)

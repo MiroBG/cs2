@@ -16,6 +16,7 @@ cs1/
 
 # Local backend config with real bucket/table names
 backend.hcl
+main/backend.hcl
 
 # Local keys
 *.pem
