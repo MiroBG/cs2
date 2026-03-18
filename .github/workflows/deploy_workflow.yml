@@ -69,18 +69,18 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Validate required backend secrets
+        run: |
+          test -n "${{ secrets.AWS_ROLE_TO_ASSUME }}" || (echo "Missing secret: AWS_ROLE_TO_ASSUME" && exit 1)
+          test -n "${{ secrets.TF_BACKEND_BUCKET }}" || (echo "Missing secret: TF_BACKEND_BUCKET" && exit 1)
+          test -n "${{ secrets.TF_LOCK_TABLE }}" || (echo "Missing secret: TF_LOCK_TABLE" && exit 1)
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: github-actions-deploy
           aws-region: ${{ env.AWS_REGION }}
-
-      - name: Validate required backend secrets
-        run: |
-          test -n "${{ secrets.AWS_ROLE_TO_ASSUME }}" || (echo "Missing secret: AWS_ROLE_TO_ASSUME" && exit 1)
-          test -n "${{ secrets.TF_BACKEND_BUCKET }}" || (echo "Missing secret: TF_BACKEND_BUCKET" && exit 1)
-          test -n "${{ secrets.TF_LOCK_TABLE }}" || (echo "Missing secret: TF_LOCK_TABLE" && exit 1)
 
       - name: Generate backend.hcl
         run: |
