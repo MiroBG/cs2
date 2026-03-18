@@ -29,3 +29,27 @@ variable "tags" {
     Project = "cs1"
   }
 }
+
+variable "github_repository" {
+  description = "GitHub repository in owner/repo format allowed to assume the OIDC role"
+  type        = string
+  default     = "MiroBG/cs1"
+}
+
+variable "github_branch" {
+  description = "GitHub branch allowed to assume the OIDC role"
+  type        = string
+  default     = "main"
+}
+
+variable "github_actions_role_name" {
+  description = "IAM role name used by GitHub Actions via OIDC"
+  type        = string
+  default     = "github-actions-terraform-ci"
+}
+
+variable "github_attach_admin_access" {
+  description = "Attach AdministratorAccess to the GitHub Actions role (set false to use least-privilege custom policies)"
+  type        = bool
+  default     = true
+}
