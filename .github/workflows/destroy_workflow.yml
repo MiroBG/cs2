@@ -57,6 +57,16 @@ jobs:
       - name: Terraform init
         run: terraform init -reconfigure -backend-config=backend.hcl
 
+      - name: Set Terraform variable overrides
+        run: |
+          ADMIN_CIDR="${{ secrets.ADMIN_INGRESS_CIDR || vars.ADMIN_INGRESS_CIDR }}"
+          if [[ -n "$ADMIN_CIDR" ]]; then
+            echo "TF_VAR_ssh_ingress_cidr=$ADMIN_CIDR" >> "$GITHUB_ENV"
+            echo "Using ADMIN_INGRESS_CIDR from GitHub Secrets/Variables"
+          else
+            echo "ADMIN_INGRESS_CIDR not set; Terraform default for ssh_ingress_cidr will be used"
+          fi
+
       - name: Terraform destroy
         run: terraform destroy -auto-approve
 
