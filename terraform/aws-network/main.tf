@@ -109,13 +109,17 @@ resource "aws_security_group" "web" {
   }
 }
 
+locals {
+  ssh_ingress_cidrs = [for cidr in split(",", var.ssh_ingress_cidr) : trimspace(cidr) if trimspace(cidr) != ""]
+}
+
 resource "aws_security_group_rule" "web_ssh_from_admin" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.web.id
-  cidr_blocks       = [var.ssh_ingress_cidr]
+  cidr_blocks       = local.ssh_ingress_cidrs
   description       = "SSH from admin CIDR"
 }
 

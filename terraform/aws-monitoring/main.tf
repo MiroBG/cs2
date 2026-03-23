@@ -16,13 +16,17 @@ resource "aws_security_group" "monitoring" {
   }
 }
 
+locals {
+  admin_ingress_cidrs = [for cidr in split(",", var.admin_ingress_cidr) : trimspace(cidr) if trimspace(cidr) != ""]
+}
+
 resource "aws_security_group_rule" "ssh_from_admin" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.monitoring.id
-  cidr_blocks       = [var.admin_ingress_cidr]
+  cidr_blocks       = local.admin_ingress_cidrs
   description       = "SSH from admin CIDR"
 }
 
@@ -32,7 +36,7 @@ resource "aws_security_group_rule" "grafana_from_admin" {
   to_port           = 3000
   protocol          = "tcp"
   security_group_id = aws_security_group.monitoring.id
-  cidr_blocks       = [var.admin_ingress_cidr]
+  cidr_blocks       = local.admin_ingress_cidrs
   description       = "Grafana from admin CIDR"
 }
 
