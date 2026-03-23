@@ -21,9 +21,11 @@ variable "db_security_group_ids" {
 variable "monitoring_role_arn" {
   description = "IAM role ARN for enhanced monitoring"
   type        = string
+  nullable    = true
 }
 
 variable "kms_key_id" {
   description = "KMS key ARN used by the RDS instance"
   type        = string
+  nullable    = true
 }

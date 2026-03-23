@@ -16,6 +16,7 @@ variable "ec2_instance_type" {
 variable "ec2_key_name" {
   description = "EC2 key pair name"
   type        = string
+  nullable    = true
 }
 
 variable "ec2_subnet_id" {

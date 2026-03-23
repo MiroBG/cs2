@@ -31,7 +31,7 @@ resource "aws_db_instance" "cs1_db" {
   maintenance_window                    = "wed:22:52-wed:23:22"
   manage_master_user_password           = true
   max_allocated_storage                 = 1000
-  monitoring_interval                   = 60
+  monitoring_interval                   = var.monitoring_role_arn != null ? 60 : 0
   monitoring_role_arn                   = var.monitoring_role_arn
   multi_az                              = false
   network_type                          = "IPV4"

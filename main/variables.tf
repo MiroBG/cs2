@@ -47,9 +47,10 @@ variable "ec2_instance_type" {
 }
 
 variable "ec2_key_name" {
-  description = "EC2 key pair name"
+  description = "EC2 key pair name (optional). Leave null to skip SSH key injection."
   type        = string
-  default     = "ssh-key"
+  nullable    = true
+  default     = null
 }
 
 variable "ec2_subnet_id" {
@@ -89,15 +90,17 @@ variable "rds_subnet_group_name" {
 }
 
 variable "rds_monitoring_role_arn" {
-  description = "IAM role ARN used for RDS enhanced monitoring"
+  description = "IAM role ARN used for RDS enhanced monitoring (optional)"
   type        = string
-  default     = "arn:aws:iam::875067222109:role/rds-monitoring-role"
+  nullable    = true
+  default     = null
 }
 
 variable "rds_kms_key_id" {
-  description = "KMS key ARN used by the imported RDS instance"
+  description = "KMS key ARN used by the RDS instance (optional). Leave null to use the account default key."
   type        = string
-  default     = "arn:aws:kms:eu-central-1:875067222109:key/6b276273-ea09-45af-97cb-87abc8b912ce"
+  nullable    = true
+  default     = null
 }
 
 variable "spoke_vpc_name" {
@@ -173,9 +176,10 @@ variable "monitoring_instance_type" {
 }
 
 variable "monitoring_key_name" {
-  description = "EC2 key pair name for the monitoring instance"
+  description = "EC2 key pair name for the monitoring instance (optional)"
   type        = string
-  default     = "ssh-key"
+  nullable    = true
+  default     = null
 }
 
 variable "grafana_admin_user" {
