@@ -26,11 +26,11 @@ Set these GitHub repository secrets:
 
 - `AWS_ROLE_TO_ASSUME` = `github_actions_role_arn`
 - `TF_BACKEND_BUCKET` = `backend_bucket_name`
+- `TF_STATE_KEY` = `cs2/terraform.tfstate` (or your chosen state path)
+
+Optional (legacy locking mode only):
+
 - `TF_LOCK_TABLE` = `lock_table_name`
-
-For a separate CS2 repository, also set:
-
-- `TF_STATE_KEY` = `cs2/terraform.tfstate`
 
 If you move the stack into a new GitHub repository, update the bootstrap variables before applying:
 
@@ -48,6 +48,7 @@ cp main/backend.hcl.example main/backend.hcl
 ```
 
 Edit `main/backend.hcl` and replace bucket value with `backend_bucket_name` output and key value with `TF_STATE_KEY`.
+The default backend template uses `use_lockfile = true` (S3 native state locking).
 
 ## 3) Migrate local state to S3
 

@@ -2,4 +2,4 @@ bucket         = "REPLACE_WITH_BOOTSTRAP_OUTPUT_BUCKET"
 key            = "REPLACE_WITH_STATE_KEY"
 region         = "eu-central-1"
 encrypt        = true
-dynamodb_table = "cs1-terraform-locks"
+use_lockfile   = true

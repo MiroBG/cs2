@@ -251,3 +251,21 @@ module "aws_soar" {
   lambda_error_alarm_threshold    = var.soar_lambda_error_alarm_threshold
   lambda_throttle_alarm_threshold = var.soar_lambda_throttle_alarm_threshold
 }
+
+module "aws_openvpn" {
+  source = "../terraform/aws-openvpn"
+
+  enable_openvpn        = var.enable_openvpn_server
+  instance_name         = var.openvpn_instance_name
+  instance_ami          = var.ec2_ami
+  instance_type         = var.openvpn_instance_type
+  key_name              = var.monitoring_key_name
+  subnet_id             = module.aws_vpc_spoke.subnet_public1_a_id
+  vpc_id                = module.aws_vpc_spoke.vpc_id
+  openvpn_port          = var.openvpn_port
+  openvpn_protocol      = var.openvpn_protocol
+  openvpn_client_cidr   = var.openvpn_client_cidr
+  openvpn_ingress_cidrs = var.openvpn_ingress_cidrs
+  ssh_ingress_cidrs     = [for cidr in split(",", var.ssh_ingress_cidr) : trimspace(cidr) if trimspace(cidr) != ""]
+  client_common_name    = var.openvpn_client_common_name
+}

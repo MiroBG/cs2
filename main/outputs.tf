@@ -117,3 +117,28 @@ output "soar_lambda_throttle_alarm_name" {
 output "soar_scheduled_test_rule_name" {
   value = module.aws_soar.scheduled_test_rule_name
 }
+
+output "openvpn_enabled" {
+  value = module.aws_openvpn.openvpn_enabled
+}
+
+output "openvpn_instance_id" {
+  value = module.aws_openvpn.instance_id
+}
+
+output "openvpn_public_ip" {
+  value = module.aws_openvpn.public_ip
+}
+
+output "openvpn_public_dns" {
+  value = module.aws_openvpn.public_dns
+}
+
+output "openvpn_security_group_id" {
+  value = module.aws_openvpn.security_group_id
+}
+
+output "openvpn_client_ovpn_config" {
+  value     = module.aws_openvpn.client_ovpn_config
+  sensitive = true
+}

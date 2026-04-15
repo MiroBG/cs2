@@ -35,7 +35,6 @@ jobs:
         run: |
           test -n "${{ secrets.AWS_ROLE_TO_ASSUME || secrets.AWS_ROLE_ARN || vars.AWS_ROLE_TO_ASSUME || vars.AWS_ROLE_ARN }}" || (echo "Missing role input: set AWS_ROLE_TO_ASSUME (or AWS_ROLE_ARN) in Secrets or Variables" && exit 1)
           test -n "${{ secrets.TF_BACKEND_BUCKET || vars.TF_BACKEND_BUCKET }}" || (echo "Missing backend bucket: set TF_BACKEND_BUCKET in Secrets or Variables" && exit 1)
-          test -n "${{ secrets.TF_LOCK_TABLE || vars.TF_LOCK_TABLE }}" || (echo "Missing lock table: set TF_LOCK_TABLE in Secrets or Variables" && exit 1)
           test -n "${{ secrets.TF_STATE_KEY || vars.TF_STATE_KEY }}" || (echo "Missing state key: set TF_STATE_KEY in Secrets or Variables" && exit 1)
 
       - name: Configure AWS credentials (OIDC)
@@ -53,7 +52,7 @@ jobs:
           key            = "${STATE_KEY}"
           region         = "${{ env.AWS_REGION }}"
           encrypt        = true
-          dynamodb_table = "${{ secrets.TF_LOCK_TABLE || vars.TF_LOCK_TABLE }}"
+          use_lockfile   = true
           EOF
 
       - name: Terraform init

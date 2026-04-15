@@ -298,3 +298,51 @@ variable "soar_lambda_throttle_alarm_threshold" {
   type        = number
   default     = 1
 }
+
+variable "enable_openvpn_server" {
+  description = "Enable deployment of a self-managed OpenVPN server"
+  type        = bool
+  default     = false
+}
+
+variable "openvpn_instance_name" {
+  description = "Name tag for the OpenVPN instance"
+  type        = string
+  default     = "cs2-openvpn"
+}
+
+variable "openvpn_instance_type" {
+  description = "Instance type used for OpenVPN"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "openvpn_port" {
+  description = "OpenVPN listener port"
+  type        = number
+  default     = 1194
+}
+
+variable "openvpn_protocol" {
+  description = "OpenVPN protocol"
+  type        = string
+  default     = "udp"
+}
+
+variable "openvpn_client_cidr" {
+  description = "CIDR pool assigned to OpenVPN clients"
+  type        = string
+  default     = "10.8.0.0/24"
+}
+
+variable "openvpn_ingress_cidrs" {
+  description = "CIDR list allowed to connect to the OpenVPN port"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "openvpn_client_common_name" {
+  description = "Common Name for generated demo OpenVPN client certificate"
+  type        = string
+  default     = "cs2-openvpn-client"
+}
