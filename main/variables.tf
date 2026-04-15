@@ -7,7 +7,7 @@ variable "region" {
 variable "vpc_name" {
   description = "Name tag for the VPC"
   type        = string
-  default     = "cs1-main-vpc"
+  default     = "cs2-main-vpc"
 }
 
 variable "vpc_cidr" {
@@ -31,7 +31,7 @@ variable "ssh_ingress_cidr" {
 variable "ec2_name" {
   description = "Name tag for EC2 instance"
   type        = string
-  default     = "web-server"
+  default     = "cs2-web-server"
 }
 
 variable "ec2_ami" {
@@ -68,25 +68,25 @@ variable "ec2_security_group_ids" {
 variable "ec2_2_name" {
   description = "Name tag for second EC2 instance"
   type        = string
-  default     = "web-server-2"
+  default     = "cs2-web-server-2"
 }
 
 variable "alb_name" {
   description = "Name of the Application Load Balancer"
   type        = string
-  default     = "cs1-alb"
+  default     = "cs2-alb"
 }
 
 variable "rds_identifier" {
   description = "Identifier of the existing RDS instance"
   type        = string
-  default     = "cs1-database"
+  default     = "cs2-database"
 }
 
 variable "rds_subnet_group_name" {
   description = "Name of the RDS subnet group"
   type        = string
-  default     = "cs1-db"
+  default     = "cs2-db"
 }
 
 variable "rds_monitoring_role_arn" {
@@ -106,7 +106,7 @@ variable "rds_kms_key_id" {
 variable "spoke_vpc_name" {
   description = "Name tag for the spoke VPC"
   type        = string
-  default     = "cs1-spoke-vpc"
+  default     = "cs2-spoke-vpc"
 }
 
 variable "spoke_vpc_cidr" {
@@ -166,7 +166,7 @@ variable "internal_dns_zone_name" {
 variable "monitoring_instance_name" {
   description = "Name tag for the monitoring EC2 instance"
   type        = string
-  default     = "monitoring-server"
+  default     = "cs2-monitoring-server"
 }
 
 variable "monitoring_instance_type" {
@@ -229,7 +229,7 @@ variable "postgres_exporter_password" {
 variable "s3_bucket_name_prefix" {
   description = "Prefix for the CS1 S3 bucket name"
   type        = string
-  default     = "cs1-storage"
+  default     = "cs2-storage"
 }
 
 variable "s3_force_destroy" {
