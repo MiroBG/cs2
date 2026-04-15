@@ -6,6 +6,10 @@ output "backend_bucket_arn" {
   value = aws_s3_bucket.tfstate.arn
 }
 
+output "backend_state_key" {
+  value = var.backend_state_key
+}
+
 output "lock_table_name" {
   value = aws_dynamodb_table.tf_lock.name
 }

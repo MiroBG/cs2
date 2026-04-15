@@ -236,3 +236,18 @@ module "aws_s3" {
     Project = "cs1"
   }
 }
+
+module "aws_soar" {
+  source = "../terraform/aws-soar"
+
+  event_source                    = var.soar_event_source
+  alert_email                     = var.soar_alert_email
+  enable_instance_shutdown        = var.soar_enable_instance_shutdown
+  shutdown_severity_threshold     = var.soar_shutdown_severity_threshold
+  enable_scheduled_test_event     = var.soar_enable_scheduled_test_event
+  scheduled_test_expression       = var.soar_scheduled_test_expression
+  response_tag_key                = var.soar_response_tag_key
+  response_tag_value_prefix       = var.soar_response_tag_value_prefix
+  lambda_error_alarm_threshold    = var.soar_lambda_error_alarm_threshold
+  lambda_throttle_alarm_threshold = var.soar_lambda_throttle_alarm_threshold
+}

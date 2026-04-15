@@ -1,0 +1,9 @@
+{
+  "source": "cs2.soar",
+  "detail-type": "security-alert",
+  "detail": {
+    "severity": 9,
+    "description": "Simulated high severity alert for CS2 testing",
+    "target_instance_id": "i-0123456789abcdef0"
+  }
+}

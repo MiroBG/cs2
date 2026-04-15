@@ -1,0 +1,8 @@
+region             = "eu-central-1"
+backend_bucket_prefix = "cs1-tfstate"
+backend_state_key   = "cs1/terraform.tfstate"
+lock_table_name     = "cs1-terraform-locks"
+github_repository   = "MiroBG/cs1"
+github_branch       = "main"
+github_actions_role_name = "github-actions-terraform-ci"
+github_attach_admin_access = true

@@ -237,3 +237,64 @@ variable "s3_force_destroy" {
   type        = bool
   default     = false
 }
+
+variable "soar_event_source" {
+  description = "EventBridge source used by the CS2 SOAR module"
+  type        = string
+  default     = "cs2.soar"
+}
+
+variable "soar_alert_email" {
+  description = "Optional email address subscribed to SOAR alerts"
+  type        = string
+  nullable    = true
+  default     = null
+}
+
+variable "soar_enable_instance_shutdown" {
+  description = "Allow the SOAR Lambda to stop an EC2 instance when a severe alert includes a target_instance_id"
+  type        = bool
+  default     = false
+}
+
+variable "soar_shutdown_severity_threshold" {
+  description = "Severity threshold used before instance shutdown is allowed"
+  type        = number
+  default     = 8
+}
+
+variable "soar_enable_scheduled_test_event" {
+  description = "Enable a scheduled synthetic SOAR test event"
+  type        = bool
+  default     = false
+}
+
+variable "soar_scheduled_test_expression" {
+  description = "Schedule expression for synthetic SOAR test events"
+  type        = string
+  default     = "rate(30 minutes)"
+}
+
+variable "soar_response_tag_key" {
+  description = "Tag key the SOAR processor writes to affected instances"
+  type        = string
+  default     = "SOARIncident"
+}
+
+variable "soar_response_tag_value_prefix" {
+  description = "Prefix used for SOAR-written instance tags"
+  type        = string
+  default     = "cs2"
+}
+
+variable "soar_lambda_error_alarm_threshold" {
+  description = "Error threshold for SOAR Lambda CloudWatch alarm"
+  type        = number
+  default     = 1
+}
+
+variable "soar_lambda_throttle_alarm_threshold" {
+  description = "Throttle threshold for SOAR Lambda CloudWatch alarm"
+  type        = number
+  default     = 1
+}

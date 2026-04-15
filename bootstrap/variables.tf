@@ -10,6 +10,12 @@ variable "backend_bucket_prefix" {
   default     = "cs1-tfstate"
 }
 
+variable "backend_state_key" {
+  description = "Remote state key used by the Terraform backend"
+  type        = string
+  default     = "cs1/terraform.tfstate"
+}
+
 variable "backend_bucket_name" {
   description = "Optional explicit tfstate bucket name (must be globally unique)"
   type        = string

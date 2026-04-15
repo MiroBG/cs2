@@ -89,3 +89,31 @@ output "s3_bucket_name" {
 output "s3_bucket_arn" {
   value = module.aws_s3.bucket_arn
 }
+
+output "soar_alert_topic_arn" {
+  value = module.aws_soar.alert_topic_arn
+}
+
+output "soar_incident_table_name" {
+  value = module.aws_soar.incident_table_name
+}
+
+output "soar_lambda_function_name" {
+  value = module.aws_soar.lambda_function_name
+}
+
+output "soar_event_rule_name" {
+  value = module.aws_soar.event_rule_name
+}
+
+output "soar_lambda_error_alarm_name" {
+  value = module.aws_soar.lambda_error_alarm_name
+}
+
+output "soar_lambda_throttle_alarm_name" {
+  value = module.aws_soar.lambda_throttle_alarm_name
+}
+
+output "soar_scheduled_test_rule_name" {
+  value = module.aws_soar.scheduled_test_rule_name
+}
