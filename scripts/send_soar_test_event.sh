@@ -20,6 +20,8 @@ DETAIL_JSON=$(cat <<EOF
 EOF
 )
 
+DETAIL_ESCAPED=$(printf '%s' "$DETAIL_JSON" | jq -cRs .)
+
 ENTRY_FILE="$(mktemp)"
 trap 'rm -f "$ENTRY_FILE"' EXIT
 
@@ -29,7 +31,7 @@ cat > "$ENTRY_FILE" <<EOF
     "Source": "cs2.soar",
     "DetailType": "security-alert",
     "EventBusName": "${EVENT_BUS_NAME}",
-    "Detail": ${DETAIL_JSON}
+    "Detail": ${DETAIL_ESCAPED}
   }
 ]
 EOF
