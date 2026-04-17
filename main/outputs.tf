@@ -118,6 +118,10 @@ output "soar_scheduled_test_rule_name" {
   value = module.aws_soar.scheduled_test_rule_name
 }
 
+output "soar_dashboard_name" {
+  value = module.aws_soar.dashboard_name
+}
+
 output "openvpn_enabled" {
   value = module.aws_openvpn.openvpn_enabled
 }

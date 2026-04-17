@@ -33,3 +33,7 @@ output "lambda_throttle_alarm_name" {
 output "scheduled_test_rule_name" {
   value = var.enable_scheduled_test_event ? aws_cloudwatch_event_rule.scheduled_test[0].name : null
 }
+
+output "dashboard_name" {
+  value = var.enable_dashboard ? aws_cloudwatch_dashboard.soar[0].dashboard_name : null
+}

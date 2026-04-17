@@ -113,6 +113,18 @@ variable "lambda_throttle_alarm_threshold" {
   default     = 1
 }
 
+variable "enable_dashboard" {
+  description = "Create a CloudWatch dashboard for SOAR runtime metrics"
+  type        = bool
+  default     = true
+}
+
+variable "dashboard_name" {
+  description = "CloudWatch dashboard name for SOAR visibility"
+  type        = string
+  default     = "cs2-soar-overview"
+}
+
 variable "tags" {
   description = "Tags applied to SOAR resources"
   type        = map(string)

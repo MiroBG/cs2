@@ -30,6 +30,8 @@ data "archive_file" "lambda_zip" {
   output_path = local.lambda_package_path
 }
 
+data "aws_region" "current" {}
+
 resource "aws_sns_topic" "alerts" {
   name = var.alert_topic_name
 
@@ -258,4 +260,54 @@ resource "aws_cloudwatch_metric_alarm" "lambda_throttles" {
   dimensions = {
     FunctionName = aws_lambda_function.processor.function_name
   }
+}
+
+resource "aws_cloudwatch_dashboard" "soar" {
+  count          = var.enable_dashboard ? 1 : 0
+  dashboard_name = var.dashboard_name
+
+  dashboard_body = jsonencode({
+    widgets = [
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 24
+        height = 8
+        properties = {
+          title   = "CS2 SOAR Custom Metrics"
+          region  = data.aws_region.current.region
+          view    = "timeSeries"
+          stacked = false
+          period  = 60
+          stat    = "Sum"
+          metrics = [
+            ["CS2/SOAR", "IncidentsProcessed"],
+            ["CS2/SOAR", "HighSeverityAlerts"],
+            ["CS2/SOAR", "ActionsExecuted"],
+          ]
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 8
+        width  = 24
+        height = 8
+        properties = {
+          title   = "CS2 SOAR Lambda Health"
+          region  = data.aws_region.current.region
+          view    = "timeSeries"
+          stacked = false
+          period  = 60
+          stat    = "Sum"
+          metrics = [
+            ["AWS/Lambda", "Invocations", "FunctionName", aws_lambda_function.processor.function_name],
+            [".", "Errors", ".", "."],
+            [".", "Throttles", ".", "."],
+          ]
+        }
+      },
+    ]
+  })
 }
